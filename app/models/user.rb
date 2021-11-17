@@ -37,7 +37,7 @@ class User < ApplicationRecord
 
   validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP
 
-  validates :name, presence: true, length: { maximum: 50 }
+  validates :name, presence: true, length: { maximum: 40 }
 
   validates :username, format: { with: /\A[a-zA-Z0-9_]+\Z/ }
 
