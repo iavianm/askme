@@ -4,24 +4,34 @@ class User < ApplicationRecord
   # Параметры работы для модуля шифрования паролей
   ITERATIONS = 20_000
   DIGEST = OpenSSL::Digest::SHA256.new
+  EMAIL_REGEX = URI::MailTo::EMAIL_REGEXP
+  USERNAME_REGEX = /\A[a-zA-Z0-9_]+\Z/
 
   attr_accessor :password
 
   has_many :questions
 
-  validates :email, :username, presence: true
-  validates :email, :username, uniqueness: true
+  validates :email,
+            presence: true,
+            uniqueness: true,
+            format: { with: EMAIL_REGEX }
 
-  validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP
+  validates :username,
+            presence: true,
+            uniqueness: true,
+            format: { with: USERNAME_REGEX }
 
-  validates :name, presence: true, length: { maximum: 40 }
+  validates :name,
+            presence: true,
+            length: { maximum: 40 }
 
-  validates :username, format: { with: /\A[a-zA-Z0-9_]+\Z/ }
   before_validation :username_downcase, :email_downcase
   before_save :encrypt_password
 
   validates :password, presence: true, on: :create
   validates_confirmation_of :password
+
+  private
 
   def self.hash_to_string(password_hash)
     password_hash.unpack('H*')[0]
@@ -40,8 +50,6 @@ class User < ApplicationRecord
     return user if user.password_hash == hashed_password
     nil
   end
-
-  private
 
   def encrypt_password
     if password.present?
