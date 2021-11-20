@@ -1,2 +1,7 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h1><%= @user.name %></h1>
+
+<div>
+  <img src="<%= @user.avatar_url %>" alt="[аватар]">
+</div>
+
+<h2><%= @user.username %></h2>
