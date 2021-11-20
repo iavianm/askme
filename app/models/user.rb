@@ -6,6 +6,7 @@ class User < ApplicationRecord
   DIGEST = OpenSSL::Digest::SHA256.new
   EMAIL_REGEX = URI::MailTo::EMAIL_REGEXP
   USERNAME_REGEX = /\A[a-zA-Z0-9_]+\Z/
+  NAME_LENGTH = 40
 
   attr_accessor :password
 
@@ -23,15 +24,13 @@ class User < ApplicationRecord
 
   validates :name,
             presence: true,
-            length: { maximum: 40 }
+            length: { maximum: NAME_LENGTH }
 
   before_validation :username_downcase, :email_downcase
   before_save :encrypt_password
 
   validates :password, presence: true, on: :create
   validates_confirmation_of :password
-
-  private
 
   def self.hash_to_string(password_hash)
     password_hash.unpack('H*')[0]
@@ -50,6 +49,8 @@ class User < ApplicationRecord
     return user if user.password_hash == hashed_password
     nil
   end
+
+  private
 
   def encrypt_password
     if password.present?
