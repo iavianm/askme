@@ -1,25 +1,64 @@
 class UsersController < ApplicationController
-  def index; end
+
+  before_action :load_user, except: %i[index create new]
+
+  # Проверяем имеет ли юзер доступ к экшену, делаем это для всех действий, кроме
+  # :index, :new, :create, :show — к этим действиям есть доступ у всех, даже у
+  # тех, у кого вообще нет аккаунта на нашем сайте.
+  before_action :authorize_user, except: %i[index new create show]
+
+  def index
+    @users = User.all
+  end
 
   def edit; end
 
-  def new; end
+  def new
+    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+
+    @user = User.new
+  end
+
+  def create
+    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+
+    @user = User.new(user_params)
+
+    if @user.save
+      redirect_to root_url, notice: 'Пользователь успешно зарегистрирован'
+    else
+      render 'new'
+    end
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: 'Данные обновлены'
+    else
+      render 'edit'
+    end
+  end
 
   def show
-    @user = User.new(
-      name: 'Miha',
-      username: 'iavianm',
-      avatar_url: 'https://secure.gravatar.com/avatar/71269686e0f757ddb4f73614f43ae445?s=100'
-    )
+    @questions = @user.questions.order(created_at: :desc)
+    @new_question = @user.questions.build
+    @questions_amount = @questions.length
+    @answers_amount = @questions.where.not(answer: nil).length
+    @unanswered_amount = @questions_amount - @answers_amount
+  end
 
-    @questions = [
-      Question.new(text: 'Как дела?', created_at: Date.parse('27.03.2016')),
-      Question.new(
-        text: 'В чем смысл жизни?', created_at: Date.parse('27.03.2016')
-      )
-    ]
+  private
 
-    # Болванка для нового вопроса
-    @new_question = Question.new
+  def authorize_user
+    reject_user unless @user == current_user
+  end
+
+  def load_user
+    @user ||= User.find params[:id]
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation,
+                                 :name, :username, :avatar_url)
   end
 end

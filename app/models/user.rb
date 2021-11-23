@@ -50,9 +50,9 @@ class User < ApplicationRecord
     nil
   end
 
-  def avatar_url
-    # code here
-  end
+  # def avatar_url
+  #   # code here
+  # end
 
   private
 
