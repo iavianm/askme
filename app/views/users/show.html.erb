@@ -22,6 +22,12 @@
   </div>
 </div>
 
+<div class="question question-content question-text text-lead">
+  <p>У вас всего <%= @questions_amount %> <%= questions_amount(@questions_amount, 'вопрос', 'вопроса', 'вопросов') %></p>
+  <p class="text-small">Вы ответили на <%= @answers_amount %> /
+    <%= @unanswered_amount %> <%= questions_amount(@unanswered_amount, 'вопрос', 'вопроса', 'вопросов') %> без ответа</p>
+</div>
+
 <div class="user-question-form-div column-1-4 column-1-4-right" id='ask-form'>
   <div class="user-question-form buffer-both">
     <%= form_for @new_question do |f| %>
@@ -41,11 +47,6 @@
 
 <div class="column-3-4">
   <div class="user-questions buffer-both">
-    <div class="question question-content question-text text-lead">
-      <p>У вас всего <%= @questions_amount %> <%= questions_amount(@questions_amount, 'вопрос', 'вопроса', 'вопросов') %></p>
-      <p class="text-small">Вы ответили на <%= @answers_amount %> /
-      <%= @unanswered_amount %> <%= questions_amount(@unanswered_amount, 'вопрос', 'вопроса', 'вопросов') %> без ответа</p>
-    </div>
     <div class="questions-list">
       <% @questions.each do |question| %>
         <%# Мы рисуем здесь для кажого вопроса в списке вопросов фрагмент %>
