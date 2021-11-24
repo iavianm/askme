@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
-
   before_action :load_user, except: %i[index create new]
-
   # Проверяем имеет ли юзер доступ к экшену, делаем это для всех действий, кроме
   # :index, :new, :create, :show — к этим действиям есть доступ у всех, даже у
   # тех, у кого вообще нет аккаунта на нашем сайте.
@@ -14,19 +12,19 @@ class UsersController < ApplicationController
   def edit; end
 
   def new
-    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+    redirect_to root_path, alert: 'Вы уже залогинены' if current_user.present?
 
     @user = User.new
   end
 
   def create
-    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+    redirect_to root_path, alert: 'Вы уже залогинены' if current_user.present?
 
     @user = User.new(user_params)
 
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_url, notice: 'Пользователь успешно зарегистрирован'
+      redirect_to root_path, notice: 'Пользователь успешно зарегистрирован'
     else
       render 'new'
     end
@@ -46,6 +44,12 @@ class UsersController < ApplicationController
     @questions_amount = @questions.length
     @answers_amount = @questions.where.not(answer: nil).length
     @unanswered_amount = @questions_amount - @answers_amount
+  end
+
+  def destroy
+    User.destroy(session[:user_id])
+
+    redirect_to root_path, notice: 'Пользователь удален :('
   end
 
   private

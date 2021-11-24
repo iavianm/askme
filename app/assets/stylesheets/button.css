@@ -12,6 +12,10 @@
 .button-dark {
   background: #2e2f41;
   color: #fff;
+  
+}.button-red {
+  background: #d40812;
+  color: #fff;
 }
 
 .button-green {
