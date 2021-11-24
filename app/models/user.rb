@@ -68,6 +68,14 @@ class User < ApplicationRecord
     end
   end
 
+  # def color
+  #   if self[:color].present?
+  #     self[:color]
+  #   else
+  #     DEFAULT_COLOR
+  #   end
+  # end
+
   def username_downcase
     username&.downcase!
   end

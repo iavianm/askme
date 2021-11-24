@@ -16,6 +16,7 @@
 //= require('webpack-jquery-ui/css');
 //= require jquery
 //= require_tree .
+//= require jquery.simplecolorpicker.js
 
 // Этот код добавляет обработчик события выдвигания формы при клике на кнопку
 // «Задать вопрос», которая видна только, когда страница открыта в маленьком

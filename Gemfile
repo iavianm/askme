@@ -19,6 +19,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 gem 'rails_12factor'
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'jquery-simplecolorpicker-rails'
 
 group :production do
   gem 'pg'
