@@ -4,7 +4,6 @@ module AuthorHelper
       'Аноним'
     else
       author == current_user
-      author.username
       link_to "@#{author.username}", user_path(author)
     end
   end

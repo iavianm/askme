@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.destroy(session[:user_id])
+    @user.destroy
 
     redirect_to root_path, notice: 'Пользователь удален :('
   end
