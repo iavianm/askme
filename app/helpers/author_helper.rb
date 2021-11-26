@@ -3,7 +3,6 @@ module AuthorHelper
     if author.blank?
       'Аноним'
     else
-      author == current_user
       link_to "@#{author.username}", user_path(author)
     end
   end
