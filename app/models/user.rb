@@ -6,6 +6,8 @@ class User < ApplicationRecord
   DIGEST = OpenSSL::Digest::SHA256.new
   EMAIL_REGEX = URI::MailTo::EMAIL_REGEXP
   USERNAME_REGEX = /\A[a-zA-Z0-9_]+\Z/
+  COLOR_REGEX = /\#[a-z0-9]+\Z/
+
   NAME_LENGTH = 40
 
   attr_accessor :password
@@ -25,6 +27,10 @@ class User < ApplicationRecord
   validates :name,
             presence: true,
             length: { maximum: NAME_LENGTH }
+
+  validates :color,
+            presence: true,
+            format: { with: COLOR_REGEX }
 
   before_validation :username_downcase, :email_downcase
   before_save :encrypt_password
