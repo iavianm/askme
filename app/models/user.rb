@@ -6,7 +6,7 @@ class User < ApplicationRecord
   DIGEST = OpenSSL::Digest::SHA256.new
   EMAIL_REGEX = URI::MailTo::EMAIL_REGEXP
   USERNAME_REGEX = /\A[a-zA-Z0-9_]+\Z/
-  COLOR_REGEX = /\#[a-z0-9]{3,6}\Z/
+  COLOR_REGEX = /^#(?:[A-Fa-f0-9]{3}){1,2}$/
 
   NAME_LENGTH = 40
 
