@@ -6,7 +6,7 @@ class User < ApplicationRecord
   DIGEST = OpenSSL::Digest::SHA256.new
   EMAIL_REGEX = URI::MailTo::EMAIL_REGEXP
   USERNAME_REGEX = /\A[a-zA-Z0-9_]+\Z/
-  COLOR_REGEX = /^#([a-f]|[A-F]|[0-9]){3}(([a-f]|[A-F]|[0-9]){3})?$/
+  COLOR_REGEX = /\A#([a-f]|[A-F]|[0-9]){3}(([a-f]|[A-F]|[0-9]){3})?\z/
 
   NAME_LENGTH = 40
 
@@ -56,10 +56,6 @@ class User < ApplicationRecord
     nil
   end
 
-  # def avatar_url
-  #   # code here
-  # end
-
   private
 
   def encrypt_password
@@ -73,14 +69,6 @@ class User < ApplicationRecord
       )
     end
   end
-
-  # def color
-  #   if self[:color].present?
-  #     self[:color]
-  #   else
-  #     DEFAULT_COLOR
-  #   end
-  # end
 
   def username_downcase
     username&.downcase!
