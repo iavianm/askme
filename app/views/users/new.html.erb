@@ -17,9 +17,9 @@
       <% if @user.errors.any? %>
         <div class="form-errors">
           <ul>
-            <% for message in @user.errors.full_messages %>
-              <li class="form-error-message"><%= message %></li>
-            <% end %>
+            <% @user.errors.full_messages.each { |message| %>
+            <li class="form-error-message"><%=  message  %></li>
+            <%  } %>
           </ul>
         </div>
       <% end %>
@@ -52,6 +52,25 @@
         <%= f.password_field :password_confirmation, class: 'form-text-field' %>
       </div>
 
+      <div class="form-field">
+        <%= f.label 'Цвет фона блока с аватаркой', class: 'form-label' %>
+        <select <%= f.color_field :color %>>
+          <option value="#005a55">Default</option>
+          <option value="#7bd148">Green</option>
+          <option value="#5484ed">Bold blue</option>
+          <option value="#a4bdfc">Blue</option>
+          <option value="#46d6db">Turquoise</option>
+          <option value="#7ae7bf">Light green</option>
+          <option value="#51b749">Bold green</option>
+          <option value="#fbd75b">Yellow</option>
+          <option value="#ffb878">Orange</option>
+          <option value="#ff887c">Red</option>
+          <option value="#dc2127">Bold red</option>
+          <option value="#dbadff">Purple</option>
+          <option value="#e1e1e1">Gray</option>
+        </select>
+      </div>
+
       <div class="form-action">
         <%= f.submit 'Зарегистрироваться', class: 'button button-small button-dark' %>
       </div>
@@ -61,3 +80,9 @@
     <%# http://guides.rubyonrails.org/form_helpers.html %>
   </div>
 </div>
+
+<script type='text/javascript'>
+    $(function (){
+        $('#user_color').simplecolorpicker();
+    });
+</script>
