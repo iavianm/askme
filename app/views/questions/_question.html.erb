@@ -16,13 +16,17 @@
       </div>
     <% end %>
 
-    <%# Дата создания вопроса (отформатированная) %>
     <div class="question-date">
       <%= l(question.created_at, format: :short) %>
     </div>
-
-    <div class="question-author">
-      <%= author_name(question.author) %>
+    <%= link_to("@#{question.author.username}",
+                user_path(question.author), class: 'author-link') if question.author.present? %>
+    <div class="container">
+      <% if question.hashtags.any? %>
+        <% question.hashtags.uniq.each do |tag| %>
+          <%= link_to tag.text, hashtag_path(tag), class: 'tag-link' %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 

@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    @hashtags = Hashtag.order(:text)
   end
 
   def edit; end
