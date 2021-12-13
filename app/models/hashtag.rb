@@ -12,6 +12,6 @@ class Hashtag < ApplicationRecord
   private
 
   def downcase_letters!
-    self.text&.downcase!
+    text&.downcase!
   end
 end

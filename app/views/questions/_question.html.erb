@@ -23,8 +23,8 @@
                 user_path(question.author), class: 'author-link') if question.author.present? %>
     <div class="container">
       <% if question.hashtags.any? %>
-        <% question.hashtags.uniq.each do |tag| %>
-          <%= link_to tag.text, hashtag_path(tag), class: 'tag-link' %>
+        <% question.hashtags.uniq.map do |tag| %>
+          <%= link_to "##{tag.text}", hashtag_path(tag.text), class: 'tag-link' %>
         <% end %>
       <% end %>
     </div>

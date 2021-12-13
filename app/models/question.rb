@@ -10,13 +10,13 @@ class Question < ApplicationRecord
 
   validates :text, presence: true, length: { maximum: 255 }
 
-  after_commit :delete_hashtag, on: %i[destroy update]
-  after_commit :create_hashtag, on: %i[create update]
+  after_save_commit :delete_hashtag
+  after_save_commit :create_hashtag
 
   def create_hashtag
-    find_hashtags.each do |t|
+    find_hashtags.map do |t|
       # находим хештег в БД или создаем новый
-      tag = Hashtag.find_or_create_by(text: t)
+      tag = Hashtag.find_or_create_by(text: t.downcase.delete('#'))
       # связываем хештег с вопросом
       hashtags << tag
     end
