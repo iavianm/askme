@@ -33,6 +33,8 @@ class User < ApplicationRecord
             format: { with: COLOR_REGEX }
 
   before_validation :username_downcase, :email_downcase
+  before_validation :set_color, on: :create
+
   before_save :encrypt_password
 
   validates :password, presence: true, on: :create
@@ -76,5 +78,9 @@ class User < ApplicationRecord
 
   def email_downcase
     email&.downcase!
+  end
+
+  def set_color
+    self.color = "#005a55" if self.color.blank?
   end
 end
