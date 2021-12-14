@@ -14,9 +14,10 @@ class Question < ApplicationRecord
   after_save_commit :create_hashtag
 
   def create_hashtag
-    find_hashtags.map do |t|
+    hashtag_questions.clear
+    self.find_hashtags.map do |t|
       # находим хештег в БД или создаем новый
-      tag = Hashtag.find_or_create_by(text: t.downcase.delete('#'))
+      tag = Hashtag.find_or_create_by(text: t.delete('#'))
       # связываем хештег с вопросом
       hashtags << tag
     end
