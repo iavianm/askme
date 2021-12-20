@@ -20,6 +20,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'jbuilder', '~> 2.7'
 gem 'jquery-simplecolorpicker-rails'
 gem 'rails_12factor'
+gem 'recaptcha'
 
 group :production do
   gem 'pg'
@@ -28,6 +29,7 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'dotenv-rails'
   gem 'sqlite3', '~> 1.4'
 end
 
