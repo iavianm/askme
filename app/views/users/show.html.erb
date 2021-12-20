@@ -53,7 +53,7 @@
         <%# Мы рисуем здесь для кажого вопроса в списке вопросов фрагмент %>
         <%# (паршал), передавая в него текущий вопрос. Это очень похоже на %>
         <%# вызов метода в ruby. %>
-        <%= render partial: 'questions/question', object: question %>
+        <%= render question, object: question %>
       <% end %>
     </div>
   </div>
