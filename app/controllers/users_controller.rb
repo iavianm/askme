@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @questions = @user.questions.order(created_at: :desc)
+    @questions = @user.questions.order(created_at: :desc).includes(:author, :hashtags, :hashtag_questions)
     @new_question = @user.questions.build
     @questions_amount = @questions.length
     @answers_amount = @questions.where.not(answer: nil).length
