@@ -24,11 +24,12 @@ class QuestionsController < ApplicationController
   # Действие create будет отзываться при POST-запросе по адресу /questions из
   # формы нового вопроса, которая находится в шаблоне на странице
   # /questions/edit
+
   def create
     @question = Question.new(question_params)
     @question.author = current_user
 
-    if @question.save
+    if check_captcha(@question) && @question.save
       redirect_to user_path(@question.user), notice: 'Вопрос задан'
     else
       render :edit
@@ -77,6 +78,14 @@ class QuestionsController < ApplicationController
   # Загружаем из базы запрошенный вопрос, находя его по params[:id].
   def load_question
     @question = Question.find(params[:id])
+  end
+
+  def check_captcha(model)
+    if current_user.present?
+      true
+    else
+      verify_recaptcha(model: model)
+    end
   end
 
   # Явно задаем список разрешенных параметров для модели Question. Мы говорим,
