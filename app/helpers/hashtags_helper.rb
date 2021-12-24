@@ -14,9 +14,6 @@
 
 module HashtagsHelper
   def render_with_hashtags(content)
-    content.gsub(/#[[:word:]-]+/) { |match| link_to match, hashtag_path(match.downcase.delete('#')) }.html_safe
+    content.gsub(/#[[:word:]-]+/) { |hashtag| link_to hashtag, hashtag_path(hashtag.downcase.delete('#')) }.html_safe
   end
 end
-
-
-

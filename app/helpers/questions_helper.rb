@@ -1,5 +1,4 @@
 module QuestionsHelper
-  
   def questions_amount(number, vopros, voprosa, voprosov)
     ostatok100 = number % 100
     if ostatok100 >= 11 && ostatok100 <= 14
